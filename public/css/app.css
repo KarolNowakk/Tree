@@ -1,0 +1,31 @@
+.container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  margin: 0;
+  padding: 0;
+}
+
+#node {
+  display: none;
+}
+
+li input:checked ~ #node {
+  display: block;
+}
+
+.check-input {
+  display: none;
+}
+
+.label-underneath {
+  text-decoration: underline;
+}
+/*# sourceMappingURL=app.css.map */

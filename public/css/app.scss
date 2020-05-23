@@ -1,0 +1,23 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 0;
+    padding: 0;
+}
+
+#node {
+    display: none;
+}
+
+li input:checked ~ #node {
+    display: block;
+}
+
+.check-input {
+    display: none;
+}
+
+.label-underneath {
+    text-decoration: underline;
+}
