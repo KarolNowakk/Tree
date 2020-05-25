@@ -9,16 +9,28 @@
         <link href="/css/app.css" rel="stylesheet">
     </head>
     <body>
+        @include('message')
         <nav class="site-header sticky-top py-1 navbar-dark bg-dark">
             <div class="d-flex flex-row justify-content-between align-items-center px-5">
                 <div class="d-flex flex-row justify-content-between">
-                    <h3 style="color:white">TREE STRUCTURE</h3>
+                    <a href="{{ route('home') }}" style="color:white; text-decoration:none;">
+                        <h3>TREE STRUCTURE</h3>
+                    </a>
                 </div>
-                <form class="form-group d-flex flex-row mt-3">
-                    <input type="email" class="form-control ml-1" id="exampleInputEmail1" aria-describedby="emailHelp">
-                    <input type="password" class="form-control ml-1" id="exampleInputPassword1">
-                    <button type="submit" class="btn btn-primary ml-1">Login</button>
-                </form>
+                @if (Auth::check())
+                    <form method="POST" action={{ route('logout') }} class="form-group d-flex flex-row mt-3">
+                        @csrf
+                        <button type="submit" class="btn btn-primary ml-1">Logout</button>
+                    </form>
+                @else
+                    <form method="POST" action={{ route('login') }} class="form-group d-flex flex-row mt-3">
+                        @csrf
+                        <input type="text" class="form-control ml-1" id="username" name="email" value="{{ old('email') }}">
+                        <input type="password" class="form-control ml-1" id="password" name="password">
+                        <button type="submit" class="btn btn-primary ml-1">Login</button>
+                        <a class="link px-2 mt-1" style="color:white" href={{ route('register') }}>Register</a>
+                    </form>
+                @endif
             </div>
         </nav>
 

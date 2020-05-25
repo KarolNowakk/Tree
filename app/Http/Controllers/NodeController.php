@@ -7,11 +7,16 @@ use Illuminate\Http\Request;
 
 class NodeController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:manage-nodes')->except(['index', 'show']);
+    }
+
     public function index()
     {
         $rootNodeChildren = Node::whereNull('parent_node')->get();
 
-        return view('structure', [
+        return view('main-structure', [
             'rootNodeChildren' => $rootNodeChildren,
         ]);
     }
