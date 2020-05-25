@@ -2,11 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'NodeController@index')->name('home');
+Route::get('/node/edit/{node}', 'NodeController@edit')->name('edit');
+Route::put('/node/{node}', 'NodeController@update')->name('update');
+Route::get('/node/create/{node}', 'NodeController@create')->name('create');
+Route::post('/node', 'NodeController@store')->name('store');
+Route::delete('/node/{node}', 'NodeController@destroy')->name('destroy');
 
-Route::get('/node_children', 'NodeController@index');
-Route::post('/node', 'NodeController@store');
-Route::delete('/node/{node}', 'NodeController@delete');
-Route::put('/node/{node}', 'NodeController@update');
+// Route::get('/register', 'Auth\RegisterController@register');

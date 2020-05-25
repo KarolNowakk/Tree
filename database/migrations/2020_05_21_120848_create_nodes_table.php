@@ -15,8 +15,16 @@ class CreateNodesTable extends Migration
             $table->id();
             $table->integer('value');
             $table->string('description');
-            $table->unsignedBigInteger('parent_node');
+            $table->integer('order')->default(1);
+            $table->unsignedBigInteger('parent_node')->nullable();
             $table->timestamps();
+
+            $table->foreign('parent_node')
+                ->references('id')
+                ->on('nodes')
+                ->onDelete('cascade')
+                ->nullable()
+            ;
         });
     }
 

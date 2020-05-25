@@ -9,11 +9,18 @@ class NodeController extends Controller
 {
     public function index()
     {
-        $rootNodeChildren = Node::where('parent_node', '==', 0)->get();
+        $rootNodeChildren = Node::whereNull('parent_node')->get();
 
-        return view('content', [
+        return view('structure', [
             'rootNodeChildren' => $rootNodeChildren,
         ]);
+    }
+
+    public function show(string $word)
+    {
+        $nodes = Node::where('description', 'like', "%{$word}%")->get();
+
+        return response()->json($nodes);
     }
 
     public function store(Request $request)
@@ -26,22 +33,39 @@ class NodeController extends Controller
 
         $newNode = Node::create($data);
 
-        return response()->json($newNode);
+        return redirect()->route('home');
     }
 
-    public function delete(Node $node)
+    public function destroy(Node $node)
     {
         $node->delete();
+
+        return redirect()->route('home');
     }
 
-    public function update(Request $request, Node $node)
+    public function update(Node $node, Request $request)
     {
         $data = $request->validate([
             'value' => 'required|numeric|between:0,1000',
             'description' => 'required|string|max:100',
             'parent_node' => 'required|numeric',
         ]);
-
         $node->update($data);
+
+        return redirect()->route('home');
+    }
+
+    public function edit(Node $node)
+    {
+        return view('edit', [
+            'node' => $node,
+        ]);
+    }
+
+    public function create(Node $node)
+    {
+        return view('create', [
+            'parent_node' => $node,
+        ]);
     }
 }

@@ -10,6 +10,11 @@ class Node extends Model
 
     public function children()
     {
-        return $this->hasMany('App\Node', 'parent_node', 'id');
+        return $this->hasMany('App\Node', 'parent_node', 'id')->orderBy('order');
+    }
+
+    public function parent()
+    {
+        return $this->hasOne('App\Node', 'id', 'parent_node');
     }
 }

@@ -1,14 +1,25 @@
 @foreach($children as $child)
-	<li>	    
-		<input type="checkbox" class="check-input" id="{{$child->id}}"> 
-        <label {!! count($child->children) ? 'class="label-underneath"' : 'class="label-empty"' !!} for="{{$child->id}}">
-			{{ $child->description }}
-			<span>{{ $child->id }}</span>
-		</label> 
-	@if(count($child->children))
-		<ul id="node">
-            @include('nested_child',['children' => $child->children])
-		</ul>
-    @endif
-	</li>
+	<li class="list-group-item">
+		<div>
+			<a class="" data-toggle="collapse" href="#id{{ $child->id }}" aria-expanded="false" aria-controls="id{{ $child->id }}">
+			@if (count($child->children))
+				<span>+</span>
+			@else
+				<span> </span>
+			@endif
+				{{ $child->description }}
+			</a>
+			<div>
+				<a style="font-size:14px" href="{{ route('edit', $child->id) }}">Edit</a>
+				<a style="font-size:14px" href="{{ route('create', $child->id) }}">Add</a>
+			</div>
+		</div>
+		@if(count($child->children))
+			<div class="collapse" id="id{{ $child->id }}">
+				<ul class="list-group list-group-flush">
+					@include('nested_child', ['children' => $child->children])
+				</ul>
+			</div>
+		@endif  
+	</li>  
 @endforeach
