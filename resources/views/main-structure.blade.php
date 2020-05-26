@@ -38,4 +38,3 @@
 </div>
 <script src="/js/expand.js"></script>
 @endsection
-{{-- data-toggle="collapse" href=".show-all" aria-controls="show-all" --}}

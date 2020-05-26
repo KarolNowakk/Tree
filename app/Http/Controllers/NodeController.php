@@ -49,7 +49,7 @@ class NodeController extends Controller
     {
         $node->delete();
 
-        return redirect()->route('home');
+        return redirect()->route('home')->with('message', "{$node->description} has been deleted.");
     }
 
     public function update(Node $node, Request $request)
@@ -61,7 +61,7 @@ class NodeController extends Controller
             SortingService::updateOrder($node->parent, $oldOrder);
         }
 
-        return redirect()->route('home');
+        return redirect()->route('home')->with('message', "{$node->description} has been updated.");
     }
 
     public function edit(Node $node)
@@ -82,7 +82,7 @@ class NodeController extends Controller
     {
         SortingService::sortChildrenByValue($node);
 
-        return redirect()->route('home');
+        return redirect()->route('home')->with('message', "Children of {$node->description} has been sorted");
     }
 
     protected function validator($data)
