@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Node;
+use App\Services\SortingService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class NodeController extends Controller
 {
@@ -14,7 +16,7 @@ class NodeController extends Controller
 
     public function index()
     {
-        $rootNodeChildren = Node::whereNull('parent_node')->get();
+        $rootNodeChildren = Node::where('parent_node', 1)->get();
 
         return view('main-structure', [
             'rootNodeChildren' => $rootNodeChildren,
@@ -30,13 +32,15 @@ class NodeController extends Controller
 
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'value' => 'required|numeric|between:0,1000',
-            'description' => 'required|string|max:100',
-            'parent_node' => 'required|numeric',
-        ]);
+        $data = $this->validator($request->all())->validate();
+        $parent = Node::findOrFail($data['parent_node']);
+        Node::create($data);
 
-        $newNode = Node::create($data);
+        if ($data['order'] == 1) {
+            SortingService::updateOrder($parent, 2);
+        } else {
+            SortingService::updateOrder($parent, $data['order']);
+        }
 
         return redirect()->route('home');
     }
@@ -50,12 +54,12 @@ class NodeController extends Controller
 
     public function update(Node $node, Request $request)
     {
-        $data = $request->validate([
-            'value' => 'required|numeric|between:0,1000',
-            'description' => 'required|string|max:100',
-            'parent_node' => 'required|numeric',
-        ]);
+        $data = $this->validator($request->all())->validate();
+        $oldOrder = $node->order;
         $node->update($data);
+        if ($oldOrder != $data['order']) {
+            SortingService::updateOrder($node->parent, $oldOrder);
+        }
 
         return redirect()->route('home');
     }
@@ -71,6 +75,23 @@ class NodeController extends Controller
     {
         return view('create', [
             'parent_node' => $node,
+        ]);
+    }
+
+    public function sortChildren(Node $node)
+    {
+        SortingService::sortChildrenByValue($node);
+
+        return redirect()->route('home');
+    }
+
+    protected function validator($data)
+    {
+        return Validator::make($data, [
+            'value' => 'required|numeric|between:0,1000',
+            'description' => 'required|string|max:100',
+            'parent_node' => 'required|numeric',
+            'order' => 'required|numeric|gt:0',
         ]);
     }
 }

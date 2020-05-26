@@ -10,5 +10,6 @@ Route::put('/node/{node}', 'NodeController@update')->name('update');
 Route::get('/node/create/{node}', 'NodeController@create')->name('create');
 Route::post('/node', 'NodeController@store')->name('store');
 Route::delete('/node/{node}', 'NodeController@destroy')->name('destroy');
+Route::get('/node/sortChildren/{node}', 'NodeController@sortChildren')->name('sortChildren');
 
 Auth::routes();

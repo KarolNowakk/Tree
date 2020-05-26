@@ -11,13 +11,16 @@
 			</a>
 			@can('manage-nodes')
 				<div>
-					<a style="font-size:14px" href="{{ route('edit', $child->id) }}">Edit</a>
-					<a style="font-size:14px" href="{{ route('create', $child->id) }}">Add</a>
+					<a style="font-size:14px px-3" class="px-2" href="{{ route('edit', $child->id) }}">Edit</a>
+					<a style="font-size:14px px-3" class="px-2" href="{{ route('create', $child->id) }}">Add</a>
+					@if(count($child->children))
+						<a style="font-size:14px px-3" class="px-2" href="{{ route('sortChildren', $child->id) }}">Sort Children</a>
+					@endif 
 				</div>
 			@endcan
 		</div>
 		@if(count($child->children))
-			<div class="collapse" id="id{{ $child->id }}">
+			<div class="collapse show-all" id="id{{ $child->id }}">
 				<ul class="list-group list-group-flush">
 					@include('nested_child', ['children' => $child->children])
 				</ul>

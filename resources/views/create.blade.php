@@ -12,7 +12,11 @@
                 <label for="value">Value</label>
                 <input type="number" class="form-control" id="value" name="value">
             </div>
-            <input type="number" class="invisible" id="parent_node"  name="parent_node" value="{{ $parent_node->id }}" required>
+            <div class="form-group">
+                <label for="order">Order</label>
+                <input type="number" class="form-control" id="order" name="order" value="1" required>
+            </div>
+            <input type="number" class="invisible" id="parent_node"  name="parent_node" value="{{ $parent_node->id }}">
             <button type="submit" class="btn btn-primary" style="margin-top: 20px">Save Changes</button>
         </form>
     </div>

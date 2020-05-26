@@ -9,6 +9,6 @@ $factory->define(Node::class, function (Faker $faker) {
     return [
         'value' => random_int(1, 100),
         'description' => $faker->sentence(random_int(1, 4)),
-        'order' => random_int(1, 100),
+        'order' => random_int(1, 10),
     ];
 });
