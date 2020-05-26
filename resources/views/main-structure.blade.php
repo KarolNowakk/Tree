@@ -7,12 +7,9 @@
         @foreach($rootNodeChildren as $rootNodeChild)
             <li class="list-group-item">
                 <div>
-                    <a style="text-decoration:none" data-toggle="collapse" href="#id{{ $rootNodeChild->id }}" aria-expanded="false" aria-controls="id{{ $rootNodeChild->id }}">
-                        @if (count($rootNodeChild->children))
-                            <span>+</span>
-                        @else
-                            <span> </span>
-                        @endif
+                    <a {!! count($rootNodeChild->children) ? 'class="not-empty"' : 'class="empty"' !!} 
+                        data-toggle="collapse" href="#id{{ $rootNodeChild->id }}" aria-expanded="false" aria-controls="id{{ $rootNodeChild->id }}">
+
                         {{ $rootNodeChild->description }}  <span style="color:#777">Value: {{ $rootNodeChild->value }}</span>
                     </a>
                     @can('manage-nodes')

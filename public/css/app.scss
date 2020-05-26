@@ -22,7 +22,6 @@
     }
   }
   
-
 .message {
     width: 700px;
     max-width: 100%;
@@ -45,4 +44,12 @@
   .message.is-error {
     background-color: #ff8799;
     color: #bf213c;
+  }
+
+  .not-empty::before {
+    content: "+"
+  }
+
+.empty::before {
+    content: "-"
   }

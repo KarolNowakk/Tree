@@ -1,12 +1,8 @@
 @foreach($children as $child)
 	<li class="list-group-item">
 		<div>
-			<a style="text-decoration:none" data-toggle="collapse" href="#id{{ $child->id }}" aria-expanded="false" aria-controls="id{{ $child->id }}">
-			@if (count($child->children))
-				<span>+</span>
-			@else
-				<span> </span>
-			@endif
+			<a {!! count($child->children) ? 'class="not-empty"' : 'class="empty"' !!}
+			 data-toggle="collapse" href="#id{{ $child->id }}" aria-expanded="false" aria-controls="id{{ $child->id }}">
 				{{ $child->description }} <span style="color:#777">Value: {{ $child->value }}</span>
 			</a>
 			@can('manage-nodes')

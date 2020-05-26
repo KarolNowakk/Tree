@@ -64,4 +64,12 @@
   background-color: #ff8799;
   color: #bf213c;
 }
+
+.not-empty::before {
+  content: "+";
+}
+
+.empty::before {
+  content: "-";
+}
 /*# sourceMappingURL=app.css.map */
